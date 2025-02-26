@@ -3,7 +3,8 @@ import './App.css'
 
 const App = () => {
   const [email, setEmail] = useState('')
-  const [comentario, setComentario] = useState('')
+  const [conteudo, setConteudo] = useState('')
+  const [comentarios, setComentarios] = useState([])
 
   const handleSubmit = (ev) => {
     ev.preventDefault()
@@ -11,43 +12,53 @@ const App = () => {
     const novoComentario = {
       id: Math.floor(Math.random() * 1000000),
       email: email,
-      comentario: comentario,
+      conteudo: conteudo,
       createAt: new Date()
     }
 
-    console.log(novoComentario)
+    setComentarios((state) => [novoComentario, ...state])
     setEmail('')
-    setComentario('')
+    setConteudo('')
   }
 
 
   return (
     <div id='appContainer'>
-      <h1>Seção de comentários</h1>
+      <h2>Seção de comentários</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email" id='email'>Email</label>
+        <label htmlFor="email">Email</label>
         <input 
           type="text" 
-          name='email'
+          id='email'
           required
           value={email}
           onChange={(ev) => setEmail(ev.target.value)}
         />
-        <label htmlFor="comentario" id='comentario'>Comentário</label>
+        <label htmlFor="conteudo">Comentário</label>
         <textarea 
-          name='comentario' 
+          id='conteudo' 
           rows='4'
           required
-          value={comentario}
-          onChange={(ev) => setComentario(ev.target.value)}
+          value={conteudo}
+          onChange={(ev) => setConteudo(ev.target.value)}
           ></textarea>
         <button type='submit' id='submit'>Enviar comentário</button>
         <hr />
-        <div id='areaDeComentarios' >
-          <h3>exemplo@email.com</h3>
-          <span>Em 01/01/2025</span>
-          <p>comentário de exemplo</p>
-        </div>
+        <section id='areaDeComentarios' >
+          {comentarios.length > 0 ? 
+          (         
+            comentarios.map((comentario) => (
+              <div key={comentario.id}>
+                <h3>{comentario.email}</h3>
+                <span>Em {comentario.createAt.toLocaleString()}</span>
+                <p>{comentario.conteudo}</p>
+              </div>
+            ))
+          )
+          : (
+            <p>Seja o primeiro a comentar!</p>
+          )}
+        </section>
       </form>
     </div>
   )
