@@ -5,10 +5,11 @@
   margin: 3em auto;
   width: 20em;
   height: fit-content;
-  min-height: 35em;
-  padding: 3em;
+  min-height: 40em;
+  padding: 2em;
   border-radius: 1em;
   box-shadow: 1em 1em 1em rgba(0, 0, 0, 0.323);
+  box-sizing: border-box;
 }
 
 #appContainer form {
@@ -34,3 +35,8 @@
   cursor: pointer;
 }
 
+@media (max-width: 426px) {
+  #appContainer {
+    width: 85%;
+  }
+}
